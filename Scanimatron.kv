@@ -1,0 +1,144 @@
+
+<BackgroundColor@Widget>
+    background_color: 1, 1, 1, 1
+    canvas.before:
+        Color:
+            rgba: root.background_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [20]
+
+<SpecialLabel@Label+BackgroundColor>
+    background_color: 54/255, 57/255, 63/255, 1
+
+<MyFloatLayout>
+
+    infobutton:infobutton
+    undobutton:undobutton
+    exitbutton:exitbutton
+    upc:upc
+    delta:delta
+    imagefield:imagefield
+    upcoutput:upcoutput
+    titleoutput:titleoutput
+    descoutput:descoutput
+    onhandoutput:onhandoutput
+    peanutindicator:peanutindicator
+
+    canvas.before:
+        Color:
+            rgba: (47/255, 49/255, 54/255, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    FloatLayout:
+        size: root.width, root.height
+        padding: 20
+        spacing: 20
+
+        ActionBar:
+            app_icon: "assets/Logo.png"
+            pos_hint: {"x":0, "y":0.9+0.01}
+            size_hint : 1, 0.1-0.01
+            ActionView:
+                ActionPrevious:
+                    with_previous: False
+                ActionButton:
+                    id: undobutton
+                    icon: ""
+                    on_release: root.undo()
+                ActionToggleButton:
+                    id: infobutton
+                    icon: "assets/Info.png"
+                ActionButton:
+                    id: exitbutton
+                    icon: "assets/Exit.png"
+                    on_release: root.exit()
+
+
+        Image:
+            id: imagefield
+            source: "assets/blank.png"
+            background_color: (47/255, 49/255, 54/255, 1)
+            canvas.before:
+                Color:
+                    rgba: self.background_color
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            pos_hint: {"x":0+0.005, "y":0.1+0.005}
+            size_hint : 0.5-0.01, 0.8-0.01
+
+        SpecialLabel:
+            id: peanutindicator
+            background_color: (47/255, 49/255, 54/255, 1)
+            text_size: self.size
+            halign: "center"
+            valign: "center"
+            pos_hint: {"x":0+0.005, "y":0+0.005}
+            size_hint : 0.5-0.01, 0.1-0.01
+            padding: [5, 5]
+
+        SpecialLabel:
+            id: upcoutput
+            text_size: self.size
+            halign: "center"
+            valign: "center"
+            pos_hint: {"x":0.5+0.005, "y":0.8+0.005}
+            size_hint : 0.5-0.01, 0.1-0.01
+            padding: [5, 5]
+
+        SpecialLabel:
+            id: titleoutput
+            text_size: self.size
+            halign: "center"
+            valign: "center"
+            pos_hint: {"x":0.5+0.005, "y":0.7+0.005}
+            size_hint : 0.5-0.01, 0.1-0.01
+            padding: [5, 5]
+
+        SpecialLabel:
+            id: onhandoutput
+            text_size: self.size
+            halign: "center"
+            valign: "center"
+            pos_hint: {"x":0.50+0.005, "y":0.6+0.005}
+            size_hint : 0.5-0.01, 0.1-0.01
+            padding: [5, 5]
+
+        SpecialLabel:
+            id: descoutput
+            text_size: self.size
+            halign: "center"
+            valign: "top"
+            pos_hint: {"x":0.5+0.005, "y":0.1+0.005}
+            size_hint : 0.5-0.01, 0.5-0.01
+            padding: [5, 5]
+
+        ToggleButton:
+            id: delta
+            text: "+" if self.state == "normal" else "-"
+            font_size: 60
+            background_color: (72/255,171/255,103/255,1) if self.state == 'normal' else (237/255,66/255,69/255,1)
+            background_normal: ""
+            background_down: ""
+            pos_hint: {"x":0.5+0.005, "y":0+0.005}
+            size_hint : 0.25, 0.1-0.01
+
+        SpecialTextInput:
+            id: upc
+            multiline:False
+            focus: True
+            on_text_validate: root.scan()
+            text_validate_unfocus: False
+            background_color: (0, 0, 0, 0.1)
+            canvas.before:
+                Color:
+                    rgba: self.background_color
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            pos_hint: {"x":0.75+0.005, "y":0+0.005}
+            size_hint : 0.25-0.01, 0.1-0.01
